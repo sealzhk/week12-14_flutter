@@ -83,6 +83,11 @@ class _MyAppState extends State<MyApp> {
     return Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
+        child: new InkWell(
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => PassengerInfo()));
+            },
         child: Column(children: <Widget>[
           Padding(
               padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
@@ -188,7 +193,7 @@ class _MyAppState extends State<MyApp> {
                   alignment: Alignment.center,
                   padding: EdgeInsets.symmetric(vertical: 5),
                   child: _textTemp('Удалить рейс')))
-        ]));
+        ])));
   }
 
   Widget _listTile(text, icon) {
@@ -202,7 +207,9 @@ class _MyAppState extends State<MyApp> {
                   color: Colors.black87,
                   fontSize: 24,
                   fontWeight: FontWeight.w600)),
-          onTap: () => {}),
+          onTap: () => {
+            Navigator.pop(context)
+          }),
     );
   }
 
@@ -273,5 +280,163 @@ class _MyAppState extends State<MyApp> {
               _listTile('История', Icon(Icons.library_books)),
               _listTile('Настройки', Icon(Icons.settings)),
             ])));
+  }
+}
+
+class PassengerInfo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('Пассажиры'),
+        ),
+        body: ListView(children: <Widget>[
+          DataTable(
+            showCheckboxColumn: false,
+            columns: [
+              DataColumn(label: Text('Имя', style: TextStyle(fontSize: 20))),
+              DataColumn(label: Text('Место', style: TextStyle(fontSize: 20))),
+              DataColumn(label: Text('Тип', style: TextStyle(fontSize: 20))),
+            ],
+            rows: [
+              DataRow(
+                  cells: [
+                    DataCell(Text('Aislu')),
+                    DataCell(Text('0 A верхний')),
+                    DataCell(Text('OFFLINE',
+                        style: TextStyle(
+                            color: Colors.white,
+                            background: Paint()
+                              ..strokeWidth = 24.0
+                              ..color = Colors.green
+                              ..style = PaintingStyle.stroke
+                              ..strokeJoin = StrokeJoin.round
+                        ))),
+                  ]),
+              DataRow(
+                  cells: [
+                    DataCell(Text('Aida')),
+                    DataCell(Text('0 B верхний')),
+                    DataCell(Text('OFFLINE',
+                        style: TextStyle(
+                            color: Colors.white,
+                            background: Paint()
+                              ..strokeWidth = 24.0
+                              ..color = Colors.green
+                              ..style = PaintingStyle.stroke
+                              ..strokeJoin = StrokeJoin.round
+                        ))),
+                  ]),
+              DataRow(
+                  cells: [
+                    DataCell(Text('Bagdat')),
+                    DataCell(Text('1 нижний')),
+                    DataCell(Text('ONLINE',
+                        style: TextStyle(
+                            color: Colors.white,
+                            background: Paint()
+                              ..strokeWidth = 24.0
+                              ..color = Colors.green
+                              ..style = PaintingStyle.stroke
+                              ..strokeJoin = StrokeJoin.round
+                        ))),
+                  ]),
+              DataRow(
+                  cells: [
+                    DataCell(Text('Nazym')),
+                    DataCell(Text('1 верхний')),
+                    DataCell(Text('ONLINE',
+                        style: TextStyle(
+                            color: Colors.white,
+                            background: Paint()
+                              ..strokeWidth = 24.0
+                              ..color = Colors.green
+                              ..style = PaintingStyle.stroke
+                              ..strokeJoin = StrokeJoin.round
+                        ))),
+                  ]),
+            ],
+          ),
+          Center(
+              child: Text(
+                'Свободные места',
+                style: TextStyle(fontSize: 20),
+              )),
+          DataTable(
+            columns: [
+              DataColumn(label: Text('', style: TextStyle(fontSize: 20))),
+              DataColumn(label: Text('', style: TextStyle(fontSize: 20))),
+              DataColumn(label: Text('', style: TextStyle(fontSize: 20))),
+            ],
+            rows: [
+              DataRow(cells: [
+                DataCell(Text('Нет имени')),
+                DataCell(Text('0 A нижний')),
+                DataCell(Text('no type',
+                    style: TextStyle(
+                        color: Colors.white,
+                        background: Paint()
+                          ..strokeWidth = 24.0
+                          ..color = Colors.green
+                          ..style = PaintingStyle.stroke
+                          ..strokeJoin = StrokeJoin.round
+                    ))),
+
+              ]),
+              DataRow(cells: [
+                DataCell(Text('Нет имени')),
+                DataCell(Text('0 B нижний')),
+                DataCell(Text('no type',
+                    style: TextStyle(
+                        color: Colors.white,
+                        background: Paint()
+                          ..strokeWidth = 24.0
+                          ..color = Colors.green
+                          ..style = PaintingStyle.stroke
+                          ..strokeJoin = StrokeJoin.round
+                    ))),
+              ]),
+              DataRow(cells: [
+                DataCell(Text('Нет имени')),
+                DataCell(Text('0 С верхний')),
+                DataCell(Text('no type',
+                    style: TextStyle(
+                        color: Colors.white,
+                        background: Paint()
+                          ..strokeWidth = 24.0
+                          ..color = Colors.green
+                          ..style = PaintingStyle.stroke
+                          ..strokeJoin = StrokeJoin.round
+                    ))),
+              ]),
+              DataRow(cells: [
+                DataCell(Text('Нет имени')),
+                DataCell(Text('2 верхний')),
+                DataCell(Text('no type',
+                    style: TextStyle(
+                        color: Colors.white,
+                        background: Paint()
+                          ..strokeWidth = 24.0
+                          ..color = Colors.green
+                          ..style = PaintingStyle.stroke
+                          ..strokeJoin = StrokeJoin.round
+                    ))),
+              ]),
+              DataRow(cells: [
+                DataCell(Text('Нет имени')),
+                DataCell(Text('2 нижний')),
+                DataCell(Text('no type',
+                    style: TextStyle(
+                        color: Colors.white,
+                        background: Paint()
+                          ..strokeWidth = 24.0
+                          ..color = Colors.green
+                          ..style = PaintingStyle.stroke
+                          ..strokeJoin = StrokeJoin.round
+                    ))),
+              ]),
+            ],
+          ),
+        ]));
   }
 }
