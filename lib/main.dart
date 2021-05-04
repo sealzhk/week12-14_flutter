@@ -31,6 +31,42 @@ class BusLine {
   });
 }
 
+class Passengers {
+  int id;
+  String name;
+  String phone;
+  String mail;
+  String price;
+  String sit_num;
+  String type;
+
+  Passengers({
+    this.id,
+    this.name,
+    this.phone,
+    this.mail,
+    this.price,
+    this.sit_num,
+    this.type,
+  });
+}
+
+class NoName {
+  int id;
+  String name;
+  String price;
+  String sit_num;
+  String type;
+
+  NoName({
+    this.id,
+    this.name,
+    this.price,
+    this.sit_num,
+    this.type,
+});
+}
+
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
@@ -66,6 +102,7 @@ class _MyAppState extends State<MyApp> {
         carNumber: 'KZ 888 KN02',
         icon: 'third.jpeg'),
   ];
+
 
   Widget _textTemp(text, [fontSize = 18.0, weight = FontWeight.normal]) {
     return Container(
@@ -283,13 +320,89 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-class PassengerInfo extends StatelessWidget {
+class PassengerInfo extends StatefulWidget {
+  @override
+  State<PassengerInfo> createState() => new PassengerInfoState();
+}
+
+class PassengerInfoState extends State<PassengerInfo> {
+  List<Passengers> passList = [
+    Passengers(
+        id: 1,
+        name: 'Aislu',
+        phone: '87785667788',
+        mail: 'aislu@gmail.com',
+        price: '2000',
+        sit_num: '0A верхний',
+        type: 'offline'
+    ),
+    Passengers(
+        id: 2,
+        name: 'Aida',
+        phone: '87776665544',
+        mail: 'aida@gmail.com',
+        price: '2000',
+        sit_num: '0B верхний',
+        type: 'offline'
+    ),
+    Passengers(
+        id: 3,
+        name: 'Bagdat',
+        phone: '87575736221',
+        mail: 'bagdat@gmail.com',
+        price: '2500',
+        sit_num: '1 нижний',
+        type: 'online'
+    ),
+    Passengers(
+        id: 4,
+        name: 'Nazym',
+        phone: '83746372812',
+        mail: 'nazym@gmail.com',
+        price: '2500',
+        sit_num: '1 верхний',
+        type: 'online'
+    ),
+  ];
+
+  List<NoName> noName = [
+    NoName(
+        id: 5,
+        name: 'Нет имени',
+        price: '3000',
+        sit_num: '0А нижний',
+        type: 'no type',
+    ),
+    NoName(
+        id: 6,
+        name: 'Нет имени',
+        price: '3000',
+        sit_num: '0В нижний',
+        type: 'no type',
+    ),
+    NoName(
+        id: 7,
+        name: 'Нет имени',
+        price: '3000',
+        sit_num: '0С нижний',
+        type: 'no type',
+    ),
+    NoName(
+        id: 8,
+        name: 'Нет имени',
+        price: '3000',
+        sit_num: '0С верхний',
+        type: 'no type',
+    )
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text('Пассажиры'),
         ),
+          //children: passList.map((bus) => cardTemplate(bus)).toList(),
         body: ListView(children: <Widget>[
           DataTable(
             showCheckboxColumn: false,
@@ -299,53 +412,15 @@ class PassengerInfo extends StatelessWidget {
               DataColumn(label: Text('Тип', style: TextStyle(fontSize: 20))),
             ],
             rows: [
+              for (Passengers i in passList)
               DataRow(
+                  onSelectChanged: (value) {
+                    _detailedInfo(context, i);
+                  },
                   cells: [
-                    DataCell(Text('Aislu')),
-                    DataCell(Text('0 A верхний')),
-                    DataCell(Text('OFFLINE',
-                        style: TextStyle(
-                            color: Colors.white,
-                            background: Paint()
-                              ..strokeWidth = 24.0
-                              ..color = Colors.green
-                              ..style = PaintingStyle.stroke
-                              ..strokeJoin = StrokeJoin.round
-                        ))),
-                  ]),
-              DataRow(
-                  cells: [
-                    DataCell(Text('Aida')),
-                    DataCell(Text('0 B верхний')),
-                    DataCell(Text('OFFLINE',
-                        style: TextStyle(
-                            color: Colors.white,
-                            background: Paint()
-                              ..strokeWidth = 24.0
-                              ..color = Colors.green
-                              ..style = PaintingStyle.stroke
-                              ..strokeJoin = StrokeJoin.round
-                        ))),
-                  ]),
-              DataRow(
-                  cells: [
-                    DataCell(Text('Bagdat')),
-                    DataCell(Text('1 нижний')),
-                    DataCell(Text('ONLINE',
-                        style: TextStyle(
-                            color: Colors.white,
-                            background: Paint()
-                              ..strokeWidth = 24.0
-                              ..color = Colors.green
-                              ..style = PaintingStyle.stroke
-                              ..strokeJoin = StrokeJoin.round
-                        ))),
-                  ]),
-              DataRow(
-                  cells: [
-                    DataCell(Text('Nazym')),
-                    DataCell(Text('1 верхний')),
-                    DataCell(Text('ONLINE',
+                    DataCell(Text(i.name)),
+                    DataCell(Text(i.sit_num)),
+                    DataCell(Text(i.type,
                         style: TextStyle(
                             color: Colors.white,
                             background: Paint()
@@ -369,10 +444,11 @@ class PassengerInfo extends StatelessWidget {
               DataColumn(label: Text('', style: TextStyle(fontSize: 20))),
             ],
             rows: [
+              for (NoName i in noName)
               DataRow(cells: [
-                DataCell(Text('Нет имени')),
-                DataCell(Text('0 A нижний')),
-                DataCell(Text('no type',
+                DataCell(Text(i.name)),
+                DataCell(Text(i.sit_num)),
+                DataCell(Text(i.type,
                     style: TextStyle(
                         color: Colors.white,
                         background: Paint()
@@ -383,60 +459,226 @@ class PassengerInfo extends StatelessWidget {
                     ))),
 
               ]),
-              DataRow(cells: [
-                DataCell(Text('Нет имени')),
-                DataCell(Text('0 B нижний')),
-                DataCell(Text('no type',
-                    style: TextStyle(
-                        color: Colors.white,
-                        background: Paint()
-                          ..strokeWidth = 24.0
-                          ..color = Colors.green
-                          ..style = PaintingStyle.stroke
-                          ..strokeJoin = StrokeJoin.round
-                    ))),
-              ]),
-              DataRow(cells: [
-                DataCell(Text('Нет имени')),
-                DataCell(Text('0 С верхний')),
-                DataCell(Text('no type',
-                    style: TextStyle(
-                        color: Colors.white,
-                        background: Paint()
-                          ..strokeWidth = 24.0
-                          ..color = Colors.green
-                          ..style = PaintingStyle.stroke
-                          ..strokeJoin = StrokeJoin.round
-                    ))),
-              ]),
-              DataRow(cells: [
-                DataCell(Text('Нет имени')),
-                DataCell(Text('2 верхний')),
-                DataCell(Text('no type',
-                    style: TextStyle(
-                        color: Colors.white,
-                        background: Paint()
-                          ..strokeWidth = 24.0
-                          ..color = Colors.green
-                          ..style = PaintingStyle.stroke
-                          ..strokeJoin = StrokeJoin.round
-                    ))),
-              ]),
-              DataRow(cells: [
-                DataCell(Text('Нет имени')),
-                DataCell(Text('2 нижний')),
-                DataCell(Text('no type',
-                    style: TextStyle(
-                        color: Colors.white,
-                        background: Paint()
-                          ..strokeWidth = 24.0
-                          ..color = Colors.green
-                          ..style = PaintingStyle.stroke
-                          ..strokeJoin = StrokeJoin.round
-                    ))),
-              ]),
+
             ],
           ),
         ]));
+  }
+
+  void _detailedInfo(context, Passengers pass) {
+    showModalBottomSheet(
+        context: context,
+        builder: (builder) {
+          return new Container(
+              color: Colors.white,
+              child: Column(
+                children: <Widget>[
+                  Container (
+                    margin: const EdgeInsets.only(top: 10, bottom: 10),
+                    child: Text(
+                      "Информация о пассажире",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontSize: 18),
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                        border:
+                        Border(bottom: BorderSide(color: Colors.black))),
+                    child: TextField(
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: pass.name,
+                          hintStyle: TextStyle(color: Colors.black)),
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                        border:
+                        Border(bottom: BorderSide(color: Colors.black))),
+                    child: TextField(
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: pass.phone,
+                          hintStyle: TextStyle(color: Colors.black)),
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                        border:
+                        Border(bottom: BorderSide(color: Colors.black))),
+                    child: TextField(
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: pass.mail,
+                          hintStyle: TextStyle(color: Colors.green)),
+                    ),
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                          child: Container(
+                            height: 50,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                color: Colors.white),
+                            child: Center(
+                              child: Text(
+                                "Место",
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          )),
+                      SizedBox(
+                        width: 30,
+                      ),
+                      Expanded(
+                          child: Container(
+                            height: 50,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                color: Colors.white),
+                            child: Center(
+                              child: Text(
+                                "Цена",
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          )),
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                          child: Container(
+                            height: 50,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                color: Colors.white),
+                            child: Center(
+                              child: Text(
+                                pass.sit_num,
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          )),
+                      SizedBox(
+                        width: 30,
+                      ),
+                      Expanded(
+                          child: Container(
+                            height: 50,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                color: Colors.white),
+                            child: Center(
+                              child: Text(
+                                pass.price,
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          )),
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.only(top: 5),
+                            height: 37,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(40),
+                                color: Colors.green),
+                            child: Center(
+                              child: Text(
+                                "изменить",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          )),
+                      SizedBox(
+                        width: 37,
+                      ),
+                      Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.only(top: 5),
+                            height: 30,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(40),
+                                color: Colors.green),
+                            child: Center(
+                              child: Text(
+                                "отправить чек",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          )),
+                    ],
+                  ),
+                  Center(
+                    child: Expanded(
+                        child: Container(
+                          padding: const EdgeInsets.only(top: 5),
+                          height: 37,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
+                              color: Colors.green),
+                          child: FlatButton(
+                          onPressed: (){
+                              Widget cancelButton = FlatButton(
+                              child: Text("НЕТ",
+                              style: TextStyle(
+                              color: Colors.green,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18.0)),
+                              onPressed: () {
+                              Navigator.of(context).pop();
+                              });
+                              Widget continueButton = FlatButton(
+                                  child: Text("ДА",
+                                      style: TextStyle(
+                                          color: Colors.green,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 18.0)),
+                                  onPressed: () => setState(() {
+                                    passList.remove(pass);
+                                    Navigator.of(context).pop();
+                                  }));
+
+                              AlertDialog alert = AlertDialog(
+                              content: Text("Вы хотите отменить покупку билета?",
+                              style: TextStyle(
+                              fontWeight: FontWeight.w400, fontSize: 21.0)),
+                              actions: [cancelButton, continueButton]);
+                              showDialog(context: context, builder: (context) => alert);
+                              },
+                            child: Text(
+                              "отменить покупку билета",
+                              style: TextStyle(
+                                  color: Colors.white, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        )),
+                  )
+                ],
+              ));
+        });
   }
 }
